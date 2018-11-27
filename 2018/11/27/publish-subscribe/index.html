@@ -11,12 +11,12 @@
   <meta name="description" content="观察者模式设计在软件设计中是一个对象，维护一个依赖列表，当任何状态发生改变自动通知它们。(来自wiki百科) 例：小明去买房（观察者Observer），去找房产中心（目标主体Subject），发布者说等有合适的就通知小明。这样就形成了一个环 发布订阅模式设计在软件架构中，发布-订阅是一种消息范式，消息的发送者（称为发布者）不会将消息直接发送给特定的接收者（称为订阅者）。而是将发布的消息分为不同的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Vue原理">
-<meta property="og:url" content="http://yoursite.com/2018/11/26/publish-subscribe/index.html">
+<meta property="og:url" content="http://yoursite.com/2018/11/27/publish-subscribe/index.html">
 <meta property="og:site_name" content="一条咸鱼">
 <meta property="og:description" content="观察者模式设计在软件设计中是一个对象，维护一个依赖列表，当任何状态发生改变自动通知它们。(来自wiki百科) 例：小明去买房（观察者Observer），去找房产中心（目标主体Subject），发布者说等有合适的就通知小明。这样就形成了一个环 发布订阅模式设计在软件架构中，发布-订阅是一种消息范式，消息的发送者（称为发布者）不会将消息直接发送给特定的接收者（称为订阅者）。而是将发布的消息分为不同的">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2017/11/22/15fe1b1f174cd376?imageslim">
-<meta property="og:updated_time" content="2018-11-26T10:13:20.692Z">
+<meta property="og:updated_time" content="2018-11-27T01:32:10.630Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vue原理">
 <meta name="twitter:description" content="观察者模式设计在软件设计中是一个对象，维护一个依赖列表，当任何状态发生改变自动通知它们。(来自wiki百科) 例：小明去买房（观察者Observer），去找房产中心（目标主体Subject），发布者说等有合适的就通知小明。这样就形成了一个环 发布订阅模式设计在软件架构中，发布-订阅是一种消息范式，消息的发送者（称为发布者）不会将消息直接发送给特定的接收者（称为订阅者）。而是将发布的消息分为不同的">
@@ -168,8 +168,8 @@
   
 
         
-        <a href="/2018/11/26/publish-subscribe/" class="archive-article-date">
-  	<time datetime="2018-11-26T10:13:20.692Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-26</time>
+        <a href="/2018/11/27/publish-subscribe/" class="archive-article-date">
+  	<time datetime="2018-11-27T01:32:10.630Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-27</time>
 </a>
         
       </header>
@@ -181,7 +181,8 @@
 <p>例：小明去买房（观察者Observer），去找房产中心（目标主体Subject），发布者说等有合适的就通知小明。这样就形成了一个环</p>
 <h1 id="发布订阅模式设计"><a href="#发布订阅模式设计" class="headerlink" title="发布订阅模式设计"></a>发布订阅模式设计</h1><p>在软件架构中，发布-订阅是一种消息范式，消息的发送者（称为发布者）不会将消息直接发送给特定的接收者（称为订阅者）。而是将发布的消息分为不同的类别，无需了解哪些订阅者（如果有的话）可能存在。同样的，订阅者可以表达对一个或多个类别的兴趣，只接收感兴趣的消息，无需了解哪些发布者（如果有的话）存在。(来自wiki百科)</p>
 <p>例：小明去买房（订阅者Subscriber），委托第三方中介去买房（调度中心Event Channel），等待第三方中介回馈消息，过了一会房产中心（发布者Publisher）发布消息给第三方中介，第三方中介发现正好符合小明的要求（key）就去通知小明。</p>
-<h1 id="两者区别"><a href="#两者区别" class="headerlink" title="两者区别"></a>两者区别</h1><p><img src="https://user-gold-cdn.xitu.io/2017/11/22/15fe1b1f174cd376?imageslim"></p>
+<h1 id="两者区别"><a href="#两者区别" class="headerlink" title="两者区别"></a>两者区别</h1><a id="more"></a>
+<p><img src="https://user-gold-cdn.xitu.io/2017/11/22/15fe1b1f174cd376?imageslim"></p>
 <p>图片来源: <a href="http://developers-club.com/posts/270339/" target="_blank" rel="noopener">developers-club</a></p>
 <blockquote>
 <ol>
@@ -308,11 +309,73 @@ class Observer {
  </code></pre>
 
 <p> 从编译入口开始看Vue</p>
-<p> 在执行npm run dev或者npm run build的时候，Vue使用rollup进行编译，入口文件为entry-runtime-with-compiler.js，<br> 该文件有以下代码，在runtime的时候执行<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// entry-runtime-with-compiler.js，</span><br><span class="line">import Vue from &apos;./runtime/index&apos;</span><br></pre></td></tr></table></figure></p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// runtime/index.js</span><br><span class="line">import Vue from &apos;core/index&apos;</span><br></pre></td></tr></table></figure>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"> // core/index.js</span><br><span class="line"> // 导入Vue的实例，初始化全局Api</span><br><span class="line">import Vue from &apos;./instance/index&apos;</span><br><span class="line">import &#123; initGlobalAPI &#125; from &apos;./global-api/index&apos;</span><br><span class="line">import &#123; isServerRendering &#125; from &apos;core/util/env&apos;</span><br><span class="line">import &#123; FunctionalRenderContext &#125; from &apos;core/vdom/create-functional-component&apos;</span><br><span class="line">initGlobalAPI(Vue)</span><br><span class="line">Object.defineProperty(Vue.prototype, &apos;$isServer&apos;, &#123;</span><br><span class="line">  get: isServerRendering</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">Object.defineProperty(Vue.prototype, &apos;$ssrContext&apos;, &#123;</span><br><span class="line">  get () &#123;</span><br><span class="line">    /* istanbul ignore next */</span><br><span class="line">    return this.$vnode &amp;&amp; this.$vnode.ssrContext</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">// expose FunctionalRenderContext for ssr runtime helper installation</span><br><span class="line">Object.defineProperty(Vue, &apos;FunctionalRenderContext&apos;, &#123;</span><br><span class="line">  value: FunctionalRenderContext</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">Vue.version = &apos;__VERSION__&apos;</span><br><span class="line"></span><br><span class="line">export default Vue</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">// instance/index.js</span><br><span class="line">// 做Vue的各种模块混</span><br><span class="line">// 每当new Vue的时候执行初始化</span><br><span class="line">function Vue (options) &#123;</span><br><span class="line">  if (process.env.NODE_ENV !== &apos;production&apos; &amp;&amp;</span><br><span class="line">    !(this instanceof Vue)</span><br><span class="line">  ) &#123;</span><br><span class="line">    warn(&apos;Vue is a constructor and should be called with the `new` keyword&apos;)</span><br><span class="line">  &#125;</span><br><span class="line">  this._init(options)</span><br><span class="line">&#125;</span><br><span class="line">// 初始化混入 *</span><br><span class="line">initMixin(Vue)</span><br><span class="line"></span><br><span class="line">stateMixin(Vue)</span><br><span class="line">// 事件混入</span><br><span class="line">eventsMixin(Vue)</span><br><span class="line">// 生命周期的混入 *</span><br><span class="line">lifecycleMixin(Vue)</span><br><span class="line">// render函数混入 *</span><br><span class="line">renderMixin(Vue)</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 走进this._init(options)方法</span><br><span class="line">// 最主要的是</span><br><span class="line">// 触发Vue原型上的$mount方法，进行compile。compiler/index.js会返回render函数和sataicRenderFns函数。等待renderMixin函数的使用。</span><br><span class="line">    if (vm.$options.el) &#123;</span><br><span class="line">      vm.$mount(vm.$options.el)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p> 在执行npm run dev或者npm run build的时候，Vue使用rollup进行编译，入口文件为entry-runtime-with-compiler.js，<br> 该文件有以下代码，在runtime的时候执行<br> <pre><code><br> // entry-runtime-with-compiler.js，<br> import Vue from ‘./runtime/index’<br> </code></pre></p>
+  <pre><code>
+ // runtime/index.js
+ import Vue from 'core/index'
+  </code></pre>
+
+  <pre><code>
+ // core/index.js
+ // 导入Vue的实例，初始化全局Api
+import Vue from './instance/index'
+import { initGlobalAPI } from './global-api/index'
+import { isServerRendering } from 'core/util/env'
+import { FunctionalRenderContext } from 'core/vdom/create-functional-component'
+initGlobalAPI(Vue)
+Object.defineProperty(Vue.prototype, '$isServer', {
+  get: isServerRendering
+})
+
+Object.defineProperty(Vue.prototype, '$ssrContext', {
+  get () {
+    /* istanbul ignore next */
+    return this.$vnode && this.$vnode.ssrContext
+  }
+})
+
+// expose FunctionalRenderContext for ssr runtime helper installation
+Object.defineProperty(Vue, 'FunctionalRenderContext', {
+  value: FunctionalRenderContext
+})
+
+Vue.version = '__VERSION__'
+
+export default Vue
+</code></pre>
+
+<pre><code>
+// instance/index.js
+// 做Vue的各种模块混
+// 每当new Vue的时候执行初始化
+function Vue (options) {
+  if (process.env.NODE_ENV !== 'production' &&
+    !(this instanceof Vue)
+  ) {
+    warn('Vue is a constructor and should be called with the `new` keyword')
+  }
+  this._init(options)
+}
+// 初始化混入 *
+initMixin(Vue)
+
+stateMixin(Vue)
+// 事件混入
+eventsMixin(Vue)
+// 生命周期的混入 *
+lifecycleMixin(Vue)
+// render函数混入 *
+renderMixin(Vue)
+</code></pre>
+
+<pre><code>
+// 走进this._init(options)方法
+// 最主要的是
+// 触发Vue原型上的$mount方法，进行compile。compiler/index.js会返回render函数和sataicRenderFns函数。等待renderMixin函数的使用。
+    if (vm.$options.el) {
+      vm.$mount(vm.$options.el)
+    }
+</code></pre>
 </h1>
       
 
@@ -392,7 +455,7 @@ class Observer {
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/11/26/publish-subscribe/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/11/27/publish-subscribe/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -532,6 +595,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">心情</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
