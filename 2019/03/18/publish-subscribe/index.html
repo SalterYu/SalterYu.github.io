@@ -6,15 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2018/12 | 一条咸鱼</title>
+  <title>Vue原理(一) | 一条咸鱼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="一条咸鱼">
-<meta property="og:url" content="http://yoursite.com/archives/2018/12/index.html">
+  <meta name="description" content="观察者模式设计在软件设计中是一个对象，维护一个依赖列表，当任何状态发生改变自动通知它们。(来自wiki百科) 例：小明去买房（观察者Observer），去找房产中心（目标主体Subject），发布者说等有合适的就通知小明。这样就形成了一个环 发布订阅模式设计在软件架构中，发布-订阅是一种消息范式，消息的发送者（称为发布者）不会将消息直接发送给特定的接收者（称为订阅者）。而是将发布的消息分为不同的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue原理(一)">
+<meta property="og:url" content="http://yoursite.com/2019/03/18/publish-subscribe/index.html">
 <meta property="og:site_name" content="一条咸鱼">
+<meta property="og:description" content="观察者模式设计在软件设计中是一个对象，维护一个依赖列表，当任何状态发生改变自动通知它们。(来自wiki百科) 例：小明去买房（观察者Observer），去找房产中心（目标主体Subject），发布者说等有合适的就通知小明。这样就形成了一个环 发布订阅模式设计在软件架构中，发布-订阅是一种消息范式，消息的发送者（称为发布者）不会将消息直接发送给特定的接收者（称为订阅者）。而是将发布的消息分为不同的">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2017/11/22/15fe1b1f174cd376?imageslim">
+<meta property="og:updated_time" content="2019-03-18T06:53:04.917Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="一条咸鱼">
+<meta name="twitter:title" content="Vue原理(一)">
+<meta name="twitter:description" content="观察者模式设计在软件设计中是一个对象，维护一个依赖列表，当任何状态发生改变自动通知它们。(来自wiki百科) 例：小明去买房（观察者Observer），去找房产中心（目标主体Subject），发布者说等有合适的就通知小明。这样就形成了一个环 发布订阅模式设计在软件架构中，发布-订阅是一种消息范式，消息的发送者（称为发布者）不会将消息直接发送给特定的接收者（称为订阅者）。而是将发布的消息分为不同的">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2017/11/22/15fe1b1f174cd376?imageslim">
   
     <link rel="alternative" href="/atom.xml" title="一条咸鱼" type="application/atom+xml">
   
@@ -150,49 +156,322 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-publish-subscribe" class="article article-type-post " itemscope="" itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/12/07/publish-subscribe/" class="archive-article-date">
-  	<time datetime="2018-12-07T00:56:33.637Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-07</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/12/07/publish-subscribe/">Vue原理(一)</a>
+    <h1 class="article-title" itemprop="name">
+      Vue原理(一)
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+        
+        <a href="/2019/03/18/publish-subscribe/" class="archive-article-date">
+  	<time datetime="2019-03-18T06:53:04.917Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><br></p>
+<h1 id="观察者模式设计"><a href="#观察者模式设计" class="headerlink" title="观察者模式设计"></a>观察者模式设计</h1><p>在软件设计中是一个对象，维护一个依赖列表，当任何状态发生改变自动通知它们。(来自wiki百科)</p>
+<p>例：小明去买房（观察者Observer），去找房产中心（目标主体Subject），发布者说等有合适的就通知小明。这样就形成了一个环</p>
+<h1 id="发布订阅模式设计"><a href="#发布订阅模式设计" class="headerlink" title="发布订阅模式设计"></a>发布订阅模式设计</h1><p>在软件架构中，发布-订阅是一种消息范式，消息的发送者（称为发布者）不会将消息直接发送给特定的接收者（称为订阅者）。而是将发布的消息分为不同的类别，无需了解哪些订阅者（如果有的话）可能存在。同样的，订阅者可以表达对一个或多个类别的兴趣，只接收感兴趣的消息，无需了解哪些发布者（如果有的话）存在。(来自wiki百科)</p>
+<p>例：小明去买房（订阅者Subscriber），委托第三方中介去买房（调度中心Event Channel），等待第三方中介回馈消息，过了一会房产中心（发布者Publisher）发布消息给第三方中介，第三方中介发现正好符合小明的要求（key）就去通知小明。</p>
+<h1 id="两者区别"><a href="#两者区别" class="headerlink" title="两者区别"></a>两者区别</h1><p><img src="https://user-gold-cdn.xitu.io/2017/11/22/15fe1b1f174cd376?imageslim"></p>
+<p>图片来源: <a href="http://developers-club.com/posts/270339/" target="_blank" rel="noopener">developers-club</a></p>
+<blockquote>
+<ol>
+<li>在观察者模式中，观察者是知道主体Subject的，而Subject一直保持对观察者的记录。相反在发布订阅中，两者并不互相了解，只能通过代理进行沟通。</li>
+<li>观察者模式大多数是同步，如：事件触发，而发布订阅模式大多数是异步，如：消息队列。</li>
+<li>观察者模式是一种紧耦合状态，而发布订阅模式是一种松耦合的状态。</li>
+<li>观察者模式是通过主体本身去遍历观察者（维护的是观察者），然后调用订阅者的通知方法去实现。而发布订阅则是通过事件管道去通知（维护的是事件）。</li>
+</ol>
+</blockquote>
+<h1 id="MVVM和MVC的区别"><a href="#MVVM和MVC的区别" class="headerlink" title="MVVM和MVC的区别"></a>MVVM和MVC的区别</h1><p>MVVM 是 Model-View-ViewModel 的缩写。mvvm 是一种设计思想。Model 层代表数据模型，也可以在 Model 中定义数据修改和操作的业务逻辑；View 代表 UI 组件，它负责将数据模型转化成 UI 展现出来，ViewModel 是一个同步 View 和 Model 的对象。</p>
+<p>在 MVVM 架构下，View 和 Model 之间并没有直接的联系，而是通过 ViewModel 进行交互，Model 和 ViewModel 之间的交互是双向的， 因此 View 数据的变化会同步到 Model 中，而 Model 数据的变化也会立即反应到 View 上。</p>
+<p>ViewModel 通过双向数据绑定把 View 层和 Model 层连接了起来，而 View 和 Model 之间的同步工作完全是自动的，无需人为干涉，因此开发者只需关注业务逻辑，不需要手动操作 DOM, 不需要关注数据状态的同步问题，复杂的数据状态维护完全由 MVVM 来统一管理。</p>
+<p>Vue.js 是一个提供了 MVVM 风格的双向数据绑定的 Javascript 库，专注于View 层。它的核心是 MVVM 中的 VM，也就是 ViewModel。 ViewModel负责连接 View 和 Model，保证视图和数据的一致性，这种轻量级的架构让前端开发更加高效、便捷。 </p>
+<a id="more"></a>
+<h1 id="回到Vue"><a href="#回到Vue" class="headerlink" title="回到Vue"></a>回到Vue</h1><p>Vue的双向绑定则是利用了观察者模式实现的。<br>参考链接：<a href="https://segmentfault.com/a/1190000013338801" target="_blank" rel="noopener">https://segmentfault.com/a/1190000013338801</a></p>
+<pre>
+<code>
+class Observer {
+  value: any;
+  dep: Dep;
+  vmCount: number; // number of vms that has this object as root $data
 
+  constructor (value: any) {
+    this.value = value
+    this.dep = new Dep()
+    this.vmCount = 0
+    // 为了标明该对象已经被observer过
+    def(value, '__ob__', this)
+    if (Array.isArray(value)) {
+      if (hasProto) {
+        protoAugment(value, arrayMethods)
+      } else {
+        copyAugment(value, arrayMethods, arrayKeys)
+      }
+      this.observeArray(value)
+    } else {
+      this.walk(value)
+    }
+  }
+
+  /**
+   * Walk through each property and convert them into
+   * getter/setters. This method should only be called when
+   * value type is Object.
+   */
+  walk (obj: Object) {
+    const keys = Object.keys(obj)
+    for (let i = 0; i < keys.length; i++) {
+      defineReactive(obj, keys[i])
+    }
+  }
+
+  /**
+   * Observe a list of Array items.
+   */
+  observeArray (items: Array<any>) {
+    for (let i = 0, l = items.length; i < l; i++) {
+      observe(items[i])
+    }
+  }
+}
+</any></code>
+</pre>
+
+ <pre><code>
+ // 拦截数据
+ export function defineReactive (
+   obj: Object,
+   key: string,
+   val: any,
+   customSetter?: ?Function,
+   shallow?: boolean
+ ) {
+   const dep = new Dep()
+
+   const property = Object.getOwnPropertyDescriptor(obj, key)
+   if (property && property.configurable === false) {
+     return
+   }
+
+   // cater for pre-defined getter/setters
+   const getter = property && property.get
+   const setter = property && property.set
+   if ((!getter || setter) && arguments.length === 2) {
+     val = obj[key]
+   }
+
+   let childOb = !shallow && observe(val)
+   Object.defineProperty(obj, key, {
+     enumerable: true,
+     configurable: true,
+     get: function reactiveGetter () {
+       const value = getter ? getter.call(obj) : val
+       if (Dep.target) {
+         dep.depend()
+         if (childOb) {
+           childOb.dep.depend()
+           if (Array.isArray(value)) {
+             dependArray(value)
+           }
+         }
+       }
+       return value
+     },
+     set: function reactiveSetter (newVal) {
+       const value = getter ? getter.call(obj) : val
+       /* eslint-disable no-self-compare */
+       if (newVal === value || (newVal !== newVal && value !== value)) {
+         return
+       }
+       /* eslint-enable no-self-compare */
+       if (process.env.NODE_ENV !== 'production' && customSetter) {
+         customSetter()
+       }
+       // #7981: for accessor properties without setter
+       if (getter && !setter) return
+       if (setter) {
+         setter.call(obj, newVal)
+       } else {
+         val = newVal
+       }
+       childOb = !shallow && observe(newVal)
+       // 使当前的调度中心通知所有Watcher
+       dep.notify()
+     }
+   })
+ }
+ </code></pre>
+
+<p> Vue模版渲染</p>
+<p> 在执行npm run dev或者npm run build的时候，Vue使用rollup进行编译，入口文件为entry-runtime-with-compiler.js，<br> 该文件有以下代码，在runtime的时候执行<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// entry-runtime-with-compiler.js，</span><br><span class="line">import Vue from &apos;./runtime/index&apos;</span><br></pre></td></tr></table></figure></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// runtime/index.js</span><br><span class="line">import Vue from &apos;core/index&apos;</span><br></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"> // core/index.js</span><br><span class="line"> // 导入Vue的实例，初始化全局Api</span><br><span class="line">import Vue from &apos;./instance/index&apos;</span><br><span class="line">import &#123; initGlobalAPI &#125; from &apos;./global-api/index&apos;</span><br><span class="line">import &#123; isServerRendering &#125; from &apos;core/util/env&apos;</span><br><span class="line">import &#123; FunctionalRenderContext &#125; from &apos;core/vdom/create-functional-component&apos;</span><br><span class="line">initGlobalAPI(Vue)</span><br><span class="line">Object.defineProperty(Vue.prototype, &apos;$isServer&apos;, &#123;</span><br><span class="line">  get: isServerRendering</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">Object.defineProperty(Vue.prototype, &apos;$ssrContext&apos;, &#123;</span><br><span class="line">  get () &#123;</span><br><span class="line">    /* istanbul ignore next */</span><br><span class="line">    return this.$vnode &amp;&amp; this.$vnode.ssrContext</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">// expose FunctionalRenderContext for ssr runtime helper installation</span><br><span class="line">Object.defineProperty(Vue, &apos;FunctionalRenderContext&apos;, &#123;</span><br><span class="line">  value: FunctionalRenderContext</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">Vue.version = &apos;__VERSION__&apos;</span><br><span class="line"></span><br><span class="line">export default Vue</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">// instance/index.js</span><br><span class="line">// 做Vue的各种模块混</span><br><span class="line">// 每当new Vue的时候执行初始化</span><br><span class="line">function Vue (options) &#123;</span><br><span class="line">  if (process.env.NODE_ENV !== &apos;production&apos; &amp;&amp;</span><br><span class="line">    !(this instanceof Vue)</span><br><span class="line">  ) &#123;</span><br><span class="line">    warn(&apos;Vue is a constructor and should be called with the `new` keyword&apos;)</span><br><span class="line">  &#125;</span><br><span class="line">  this._init(options)</span><br><span class="line">&#125;</span><br><span class="line">// 初始化混入 *</span><br><span class="line">initMixin(Vue)</span><br><span class="line"></span><br><span class="line">stateMixin(Vue)</span><br><span class="line">// 事件混入</span><br><span class="line">eventsMixin(Vue)</span><br><span class="line">// 生命周期的混入 *</span><br><span class="line">lifecycleMixin(Vue)</span><br><span class="line">// render函数混入 *</span><br><span class="line">renderMixin(Vue)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 走进this._init(options)方法</span><br><span class="line">// 最主要的是</span><br><span class="line">// 触发Vue原型上的$mount方法，进行compile。compiler/index.js会返回render函数和sataicRenderFns函数。等待renderMixin函数的使用。</span><br><span class="line">    if (vm.$options.el) &#123;</span><br><span class="line">      vm.$mount(vm.$options.el)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>在render.js的renderMixi方法中使用了以下方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// core/instance/render.js文件中 line:83</span><br><span class="line">// 这里就是将template进行转换</span><br><span class="line">try &#123;</span><br><span class="line">      vnode = render.call(vm._renderProxy, vm.$createElement)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">// render方法 ，由compiler方法返回，功能是使用with语句的作用是将代码的作用域设置到一个特定的作用域中。之后的msg的都是访问的this中的属性，而this就是</span><br><span class="line">// vm._renderProxy（vm的一个代理实例），由于Vue自己的proxy方法会将this.data.msg的值的获取改为this.msg，因此msg就变成了</span><br><span class="line">// options中的data的一个值传入。经过_c (createElement)方法完成template模版的替换。</span><br><span class="line">(function anonymous(</span><br><span class="line">) &#123;</span><br><span class="line">with(this)&#123;return _c(&apos;div&apos;,&#123;attrs:&#123;&quot;id&quot;:&quot;el&quot;&#125;&#125;,[_v(&quot;\n  &quot;+_s(msg)+_s(msg)+&quot;\n&quot;)])&#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>###梳理下Vue初始化流程：</p>
+<blockquote>
+<ol>
+<li>在<font color="pink" size="4">new</font>实例Vue的时候，调用<font color="pink" size="4">this._init(options)</font>方法将传入的对象作为$options属性存在Vue实例中。并将各种组件的props，父子组件的inject属性和指令进行合并，开始走created流程。</li>
+<li>执行了<font color="pink" size="4">initState()</font>方法，对所有数据包括(props和methods)进行拦截，给数据进行observer，并且给被observer过的属性增加ob属性标识，来表示已经被observer。【数据拦截原理见上方观察者模式】<blockquote>
+<font color="grey" size="2">补充:由于遍历对象的属性，则每个对象都会有一个Dep，且一个Dep可能会有许多Watcher，因为可能这个属性的值被多处使用，所以当数据改变，则遍历触发自身的所有的Watcher。即dep.notify() =&gt; Array.forEach.update</font></blockquote>
+</li>
+<li>之后调用<font color="pink" size="4">vm.$mount(el)</font>方法, 进行Vue的mounted。</li>
+<li>在这之前用一个字段mount存储目标的自定义mounted方法后调用公用的mounted方法，在mounted过程中调用<font color="pink" size="4">compilerToFunctions()</font>方法返回一个render函数(一个with关键字函数，切设计虚拟DOM树)，并设置<font color="pink" size="4">options.render = render</font>。</li>
+<li>在公用的mounted方法后有一个<font color="pink" size="4">return mount.call(this, el, hydrating)</font>方法，开始调用自定义的mounted方法。</li>
+<li>在自定义mounted方法中，调用<font color="pink" size="4">mountComponent()</font>完成观察者模式：实例Watcher类。</li>
+<li>每个Watcher类在constructor中会调用<font color="pink" size="4">this.value = this.lazy ? undefined : this.get()</font>, 而this.get()方法将自身依赖push给全局的targetStack数组中，并把Dep.target的指向指为当前Watcher。 当要获取属性的值的时候，相应属性自身的get方法之前，将会被之前observer数据拦截，此时Dep.target就存在值，就调用了内部的<font color="pink" size="4">dep.depend()</font>方法实现依赖关系，将当前Watcher放入当前Dep中，等待后期的数据更新。这样就行成了一个依赖环。</li>
+</ol>
+</blockquote>
+<p>最后贴一下官网的生命周期图<a href="https://cn.vuejs.org/v2/guide/instance.html#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%9B%BE%E7%A4%BA" target="_blank" rel="noopener">Vue生命周期</a></p>
+<p>Vue的详细模板编译原理<a href="https://github.com/berwin/Blog/issues/18" target="_blank" rel="noopener">传送门</a></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/03/18/publish-subscribe/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2019/03/19/simple-compiler/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          AST入门
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2018/11/26/simpe-webpack-project/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Webpack详解</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -202,7 +481,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 Salter Yu
+    		&copy; 2019 Salter Yu
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -215,8 +494,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
