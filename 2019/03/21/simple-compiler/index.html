@@ -11,13 +11,13 @@
   <meta name="description" content="前言AST Explore，可视化工具 现如今，许多各式各样的框架诞生，特别是多端生成的解决方案，例如：taro，Chameleon（卡梅隆），小程序框架: mpvue，wepy。又或者在其他场景，如：  eslint对代码错误或风格的检查，发现一些潜在的错误 IDE的错误提示、格式化、高亮、自动补全等. UglifyJS压缩代码. 代码打包工具webpack。  万变不离其宗，都是站在AST这个">
 <meta property="og:type" content="article">
 <meta property="og:title" content="AST入门">
-<meta property="og:url" content="http://yoursite.com/2019/03/19/simple-compiler/index.html">
+<meta property="og:url" content="http://yoursite.com/2019/03/21/simple-compiler/index.html">
 <meta property="og:site_name" content="一条咸鱼">
 <meta property="og:description" content="前言AST Explore，可视化工具 现如今，许多各式各样的框架诞生，特别是多端生成的解决方案，例如：taro，Chameleon（卡梅隆），小程序框架: mpvue，wepy。又或者在其他场景，如：  eslint对代码错误或风格的检查，发现一些潜在的错误 IDE的错误提示、格式化、高亮、自动补全等. UglifyJS压缩代码. 代码打包工具webpack。  万变不离其宗，都是站在AST这个">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/12/24/167dfa8949b0401a?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
 <meta property="og:image" content="https://img4.tuhu.org/PeccancyCheXingYi/Fi-8bDBlO2XddekCkb9NTbL1eXv3_w649_h800.jpeg@100Q.jpg">
-<meta property="og:updated_time" content="2019-03-19T06:33:18.275Z">
+<meta property="og:updated_time" content="2019-03-21T01:19:58.235Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AST入门">
 <meta name="twitter:description" content="前言AST Explore，可视化工具 现如今，许多各式各样的框架诞生，特别是多端生成的解决方案，例如：taro，Chameleon（卡梅隆），小程序框架: mpvue，wepy。又或者在其他场景，如：  eslint对代码错误或风格的检查，发现一些潜在的错误 IDE的错误提示、格式化、高亮、自动补全等. UglifyJS压缩代码. 代码打包工具webpack。  万变不离其宗，都是站在AST这个">
@@ -169,8 +169,8 @@
   
 
         
-        <a href="/2019/03/19/simple-compiler/" class="archive-article-date">
-  	<time datetime="2019-03-19T06:33:18.275Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-19</time>
+        <a href="/2019/03/21/simple-compiler/" class="archive-article-date">
+  	<time datetime="2019-03-21T01:19:58.235Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-21</time>
 </a>
         
       </header>
@@ -190,7 +190,7 @@
 <p><img src="https://user-gold-cdn.xitu.io/2018/12/24/167dfa8949b0401a?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="来源"><br><a id="more"></a></p>
 <h2 id="什么是编译器"><a href="#什么是编译器" class="headerlink" title="什么是编译器"></a>什么是编译器</h2><p>编译器：能够把一种语言等价得转换为另一种目标语言。从现代高级编译器的角度讲，源语言是高级程序设计语言，<br>容易阅读与编写，而目标语言是机器语言，即二进制代码，能够被计算机直接识别。<br>语言系统的处理角度来看，由源程序生成可执行程序的整体工作流程如下所示。</p>
 <p>源程序 -&gt; 预处理器 -&gt; 编译器 -&gt; 目标程序 -&gt; …. -&gt; 可执行程序</p>
-<p>编译器又分为前端后后端。前端包括词法分析、语法分析、语义分析、中间代码生成，具有机器无关性，比较有代表性的工具是 Flex、Bison。<br>后端包括中间代码优化、目标代码生成，具有机器相关性，比较有代表性的工具是 LLVM。</p>
+<p>编译器又分为前端和后端。前端包括词法分析、语法分析、语义分析、中间代码生成，具有机器无关性，比较有代表性的工具是 Flex、Bison。<br>后端包括中间代码优化、目标代码生成，具有机器相关性，比较有代表性的工具是 LLVM。</p>
 <p>具体编译原理，查看这篇文章 <a href="https://zhuanlan.zhihu.com/p/31096468" target="_blank" rel="noopener">前端为什么要学习编译原理</a></p>
 <h2 id="编译器的编译过程"><a href="#编译器的编译过程" class="headerlink" title="编译器的编译过程"></a>编译器的编译过程</h2><h3 id="1-词法分析"><a href="#1-词法分析" class="headerlink" title="1.词法分析"></a>1.词法分析</h3><p>获取原始代码，称为文法，scan，进行分析，转换为词法单元。token是一个不可再分割的最小单元，每个不可分割的最小单元<br>都有能被唯一识别的类型和其他附加属性，并通过一个标记器将其拆分为这些命名标记的东西。最终生成一个tokens。<br>对于token的验证，可以用正则表达式，一个一个进行扫描匹配，指针不断往后移直至不满足匹配规则或达到末尾。<br>这个过程会过滤换行符和空格等等<br>例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">   const input = &apos;(add 2 (subtract 4 &quot;abc&quot;))&apos;</span><br><span class="line">// 转换为</span><br><span class="line">   const tokens = [ &#123; type: &apos;paren&apos;, value: &apos;(&apos; &#125;,</span><br><span class="line">     &#123; type: &apos;name&apos;, value: &apos;add&apos; &#125;,</span><br><span class="line">     &#123; type: &apos;number&apos;, value: &apos;2&apos; &#125;,</span><br><span class="line">     &#123; type: &apos;paren&apos;, value: &apos;(&apos; &#125;,</span><br><span class="line">     &#123; type: &apos;name&apos;, value: &apos;subtract&apos; &#125;,</span><br><span class="line">     &#123; type: &apos;number&apos;, value: &apos;4&apos; &#125;,</span><br><span class="line">     &#123; type: &apos;number&apos;, value: &apos;2&apos; &#125;,</span><br><span class="line">     &#123; type: &apos;paren&apos;, value: &apos;)&apos; &#125;,</span><br><span class="line">     &#123; type: &apos;paren&apos;, value: &apos;)&apos; &#125; ]</span><br></pre></td></tr></table></figure></p>
 <h3 id="2-语法分析"><a href="#2-语法分析" class="headerlink" title="2.语法分析"></a>2.语法分析</h3><p>根据token的标记，逐个读入token，使用深度优先遍历并将其重新格式化为描述语法各个部分及其相互关系的表示形式，称为AST。<br>遇到起始符号，如”&lt;”, “(“, “{“ 等，嵌套递归，直到遇到终结符号，退出遍历。<br>这是一个深度嵌套的对象，以一种即方便使用又能提供大量信息的方式来表示的代码。<br>例如:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">const ast = &#123;</span><br><span class="line">  type: &apos;Program&apos;,</span><br><span class="line">  body: [&#123;</span><br><span class="line">    type: &apos;CallExpression&apos;,</span><br><span class="line">    name: &apos;add&apos;,</span><br><span class="line">    params: [&#123;</span><br><span class="line">      type: &apos;NumberLiteral&apos;,</span><br><span class="line">      value: &apos;2&apos;</span><br><span class="line">    &#125;, &#123;</span><br><span class="line">      type: &apos;CallExpression&apos;,</span><br><span class="line">      name: &apos;subtract&apos;,</span><br><span class="line">      params: [&#123;</span><br><span class="line">        type: &apos;NumberLiteral&apos;,</span><br><span class="line">        value: &apos;4&apos;</span><br><span class="line">      &#125;, &#123;</span><br><span class="line">        type: &apos;NumberLiteral&apos;,</span><br><span class="line">        value: &apos;2&apos;</span><br><span class="line">      &#125;]</span><br><span class="line">    &#125;]</span><br><span class="line">  &#125;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
@@ -311,7 +311,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/03/19/simple-compiler/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/03/21/simple-compiler/" alt="微信分享二维码">
     </div>
 </div>
 
