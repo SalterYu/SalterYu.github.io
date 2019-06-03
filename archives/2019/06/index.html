@@ -54,7 +54,11 @@
 
 
 
-  <title> 用docker来构建一个react项目镜像（一） · 一条咸鱼 </title>
+  <title>
+  
+    归档 · 一条咸鱼
+  
+</title>
 </head>
 <body>
   <div class="progress">
@@ -224,120 +228,63 @@
         <div class="main-wrapper">
           
     
-  
-  <article class="
-  post
-   is_post 
-  ">
-    <header class="post-header">
-      <div class="post-time syuanpi fadeInUpShort back-1">
-        <div class="post-time-wrapper">
-          <span>2019-05-14</span>
-          
-          
+    <div class="archive syuanpi fadeInUp" id="archive">
+        
+            <h1 class="archive-title">Total</h1>
+            <span class="archive-num">一共有 5 篇文章</span>
+        
+        <div class="archive-list">
+            <ul>
+        
             
-          
+                
+                
+                
+                    
+                     
+                        <h2 class="archive-year"> 2019 </h2>
+                    
+                
+            
+            
+            <li class="archive-post">
+                <span class="archive-post-time">
+                
+                    06-03
+                
+                </span>
+                <span class="archive-post-link">
+                    <a href="/2019/06/03/nginx/">使用nginx做反代理以及添加SSL。</a>
+                </span>
+            </li>
+
+        
+            
+                
+                
+                
+            
+            
+            <li class="archive-post">
+                <span class="archive-post-time">
+                
+                    06-03
+                
+                </span>
+                <span class="archive-post-link">
+                    <a href="/2019/06/03/simple-compiler/">AST入门</a>
+                </span>
+            </li>
+
+        
+            </ul>
         </div>
-      </div>
-      <h1 class="post-title syuanpi fadeInUpShort back-2">
-        
-          用docker来构建一个react项目镜像（一）
-        
-      </h1>
-    </header>
-    <div class="post-content syuanpi fadeInUpShort back-3">
-      
-        <p><br></p>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近在捣鼓自己的一个小站点，但是每次更新项目都要发布后总是ssh，然后重启nginx，属实麻烦，就尝试使用Jenkins来部署自动化，但在这之前要了解一下docker。<br>就尝试用docker来构建一个react项目。</p>
-<a id="more"></a>
-<p>####创建一个react-app项目</p>
-<p>这里就直接使用create-react-app 脚手架了。</p>
-<p>安装脚手架<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g create-react-app</span><br></pre></td></tr></table></figure></p>
-<p>完事后执行以下指令，创建一个目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create-react-app docker-demo</span><br></pre></td></tr></table></figure></p>
-<p>在创建后的根目录下面新建一个Dockerfile文件<br>并键入以下代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"># 使用node版本11.12.0</span><br><span class="line">FROM node:11.12.0</span><br><span class="line"></span><br><span class="line"># 代表生产环境</span><br><span class="line">ENV PROJECT_ENV production</span><br><span class="line"># 许多 package 会根据此环境变量，做出不同的行为</span><br><span class="line"># 另外，在 webpack 中打包也会根据此环境变量做出优化，但是 create-react-app 在打包时会写死该环境变量</span><br><span class="line">ENV NODE_ENV production</span><br><span class="line"># 进入code文件夹，如果没有则会生成，并进入文件夹</span><br><span class="line">WORKDIR /code</span><br><span class="line"># 将当前内容 放入code文件夹</span><br><span class="line">ADD . /code</span><br><span class="line"></span><br><span class="line"># 执行指令</span><br><span class="line">RUN yarn install &amp;&amp; yarn build &amp;&amp; npm install -g http-server</span><br><span class="line"></span><br><span class="line"># 暴露容器端口 8080</span><br><span class="line">EXPOSE 8080</span><br><span class="line"></span><br><span class="line"># 当执行docker run的时候会执行以下shell 脚本。</span><br><span class="line">CMD http-server ./build -p 8080</span><br></pre></td></tr></table></figure></p>
-<p>一切准备就绪后，开始创建镜像。<br>假设已经安装了docker环境。</p>
-<p>在当前项目目录下执行build指令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// -t 给这个镜像打tag</span><br><span class="line">docker build -t=reactapp .</span><br></pre></td></tr></table></figure></p>
-<p>build完成后可以查看镜像列表<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker image list</span><br></pre></td></tr></table></figure></p>
-<p>然后启动镜像变为容器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 表示将本地4040端口代理映射容器暴露的8080端口</span><br><span class="line"> docker run -p 4040:8080 reactapp</span><br></pre></td></tr></table></figure></p>
-<p>之后会出现<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Starting up http-server, serving ./build</span><br><span class="line">Available on:</span><br><span class="line">  http://127.0.0.1:8080</span><br><span class="line">  http://172.17.0.2:8080</span><br><span class="line">Hit CTRL-C to stop the server</span><br></pre></td></tr></table></figure></p>
-<p>然后输入链接可以访问，如果以上操作是服务器端的话，可以用外网进行打开，但是端口要变成4040，因为8080是容器内部服务的端口。</p>
-
-      
-    
     </div>
     
-      
-
-      
-  <hr class="copy-line">
-  <div class="post-copyright">
-    <div class="copy-author">
-      <span>作者 :</span>
-      <span>Salter Yu</span>
-    </div>
-    <div class="copy-url">
-      <span>地址 :</span>
-      <a href="https://salteryu.github.io/2019/05/14/docker-react-app/">https://salteryu.github.io/2019/05/14/docker-react-app/</a>
-    </div>
-    <div class="copy-origin">
-      <span>来源 :</span>
-      <a href="https://salteryu.github.io">https://salteryu.github.io</a>
-    </div>
-    <div class="copy-license">
-      
-      著作权归作者所有，转载请联系作者获得授权。
-    </div>
-  </div>
-
-    
-  </article>
-  
-    
-  <nav class="article-page">
-    
-      <a href="/2019/06/03/simple-compiler/" id="art-left" class="art-left">
-        <span class="next-title">
-          <i class="iconfont icon-left"></i>AST入门
-        </span>
-      </a>
-    
-    
-      <a href="/2019/03/18/publish-subscribe/" id="art-right" class="art-right">
-        <span class="prev-title"> 
-          Vue原理(一)<i class="iconfont icon-right"></i>  
-        </span>
-      </a>
-    
+  <nav class="pagination">
+      <span class="page-number current">1</span>
   </nav>
 
-    
-  <i id="com-switch" class="iconfont icon-more jumping-in long infinite" style="font-size:24px;display:block;text-align:center;transform:rotate(180deg);"></i>
-  <div class="post-comments" id="post-comments" style="display: block;margin: auto 16px;">
-    
-    
-    
-
-    
-
-  </div>
-
-
-
-  
-  
-    
-  
-  <aside class="post-toc">
-    <span class="title" id="toc-switch"><span>文章导航</span></span>
-    <div class="toc-inner syuanpi back-1" style="display:none;">
-      <li class="title-link"><a href="javascript:;" class="toTop">用docker来构建一个react项目镜像（一）</a></li>
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a></li></ol>
-    </div>
-  </aside>
-
-
-
-  
 
 
         </div>

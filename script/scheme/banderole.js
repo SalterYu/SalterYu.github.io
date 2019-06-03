@@ -1,9 +1,9 @@
-nlvi.prototype.banderole = function() {
+nlvi.prototype.banderole = function () {
   var utils = this.universal();
   var tool = this.tools;
-  utils.back2top = function() {
+  utils.back2top = function () {
     var scrollTop = tool('scroll')(window);
-    scrollTop(function(sct) {
+    scrollTop(function (sct) {
       if (sct > 110) {
         tool('opreateClass')('#backtop', 'clarity', 'add');
         tool('opreateClass')('#backtop', 'melt', 'remove');
@@ -24,10 +24,10 @@ nlvi.prototype.banderole = function() {
       });
     });
   }
-  utils.switchToc = function() {
+  utils.switchToc = function () {
     tool('opreateClass')('#toc-switch', 'not-toc');
     tool('opreateClass')('.toc-inner', 'back-1', 'remove');
-    $('#toc-switch').on('click', function() {
+    $('#toc-switch').on('click', function () {
       if (tool('existClass')(this, 'not-toc')) {
         tool('opreateClass')(this, 'not-toc', 'remove');
         tool('opreateClass')('.toc-inner', 'fadeOutRight', 'remove');
@@ -35,21 +35,23 @@ nlvi.prototype.banderole = function() {
         $('.toc-inner').show();
         tool('opreateClass')('.container-inner', 'has_toc');
       } else {
-        tool('animationEnd')('.toc-inner', 'fadeOutRight', function() {
+        tool('animationEnd')('.toc-inner', 'fadeOutRight', function () {
           $('.toc-inner').hide();
         });
         tool('opreateClass')(this, 'not-toc');
         tool('opreateClass')('.container-inner', 'has_toc', 'remove');
       }
     });
+    // 模拟点击
+    $('#toc-switch').click()
   }
-  utils.tagcloud = function() {
-    $('#tags').on('click', function() {
+  utils.tagcloud = function () {
+    $('#tags').on('click', function () {
       tool('opreateClass')('#tagcloud', 'show', 'add');
       tool('opreateClass')('.tagcloud-mask', 'show', 'add');
       tool('opreateClass')('.header', 'show', 'add');
     });
-    $('.tagcloud-mask').on('click', function() {
+    $('.tagcloud-mask').on('click', function () {
       tool('opreateClass')('#tagcloud', 'show', 'remove');
       tool('opreateClass')('.tagcloud-mask', 'show', 'remove');
       tool('opreateClass')('.header', 'show', 'remove');
