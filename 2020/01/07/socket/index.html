@@ -54,10 +54,7 @@
 
 
 
-  <title>
-  古明地家
-  
-</title>
+  <title>  · 古明地家 </title>
 </head>
 <body>
   <div class="progress">
@@ -226,70 +223,11 @@
       <main class="main" id="main">
         <div class="main-wrapper">
           
-  
-
-<section class="posts">
-  
     
   
   <article class="
   post
-  
-  ">
-    <header class="post-header">
-      <div class="post-time syuanpi fadeInUpShort back-1">
-        <div class="post-time-wrapper">
-          <span>2020-03-25</span>
-          
-          
-        </div>
-      </div>
-      <h1 class="post-title syuanpi fadeInUpShort back-2">
-        
-          <a href="/2020/03/25/object-oriented-for-miniapp/"></a>
-        
-      </h1>
-    </header>
-    <div class="post-content syuanpi fadeInUpShort back-3">
-      
-        
-          <h1 id="在小程序使用面向对象的思想"><a href="#在小程序使用面向对象的思想" class="headerlink" title="在小程序使用面向对象的思想"></a>在小程序使用面向对象的思想</h1><p>面向对象是啥就不说了，这里主要讲如何在小程序中使用，以及为何我习惯使用这种思想。</p>
-<h3 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h3><p>比如，你有一个需求或者接到了一个业务线，这个业务线可能需要一直迭代，若每次改动都在小程序的视图js中改动，这会让视图代码很耦合。<br>就好比现在的保养下单，在不了解业务的情况下，当改动一处功能，你以为完成了并且没有bug了，但说不准就影响了其他地方，直到测试的时候<br>才出现。甚至了解业务的人，时间长了也会遗忘。现在的情况大多都是面向流程，毕竟这是js，不是其他后端语言。<br>具体面向流程的代码栗子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">const delay = time =&gt; &#123;</span><br><span class="line">  return new Promise(resolve =&gt; &#123;</span><br><span class="line">    setTimeout(() =&gt; &#123;</span><br><span class="line">      resolve();</span><br><span class="line">    &#125;, time);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">const getActivityId = () =&gt; &#123;</span><br><span class="line">  return delay(2000).then(_ =&gt; (&#123; couponItem: &apos;1234&apos; &#125;));</span><br><span class="line">&#125;;</span><br><span class="line">const getProducts = (b) =&gt; &#123;</span><br><span class="line">  return delay(3000).then(_ =&gt; ([&#123; id: 1, value: 1 &#125;, &#123; id: 2, value: 2 &#125;]));</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">const start = () =&gt; &#123;</span><br><span class="line">  pro1().then(res1 =&gt; &#123;</span><br><span class="line">    console.log(&apos;pro1&apos;);</span><br><span class="line">    pro2().then(res2 =&gt; &#123;</span><br><span class="line">      console.log(&apos;pro2&apos;);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">let obj = &#123;</span><br><span class="line">  data: &#123;</span><br><span class="line">    couponItem: null,</span><br><span class="line">    viewData2: []</span><br><span class="line">  &#125;,</span><br><span class="line">  onLoad() &#123;</span><br><span class="line">    return this.getData();</span><br><span class="line">  &#125;,</span><br><span class="line">  getData() &#123;</span><br><span class="line">    // 获取两次数据</span><br><span class="line">    return getActivityId().then(res1 =&gt; &#123;</span><br><span class="line">      this.data.couponItem = res1.couponItem</span><br><span class="line">      return getProduct().then(res2 =&gt; &#123;</span><br><span class="line">        this.res2 = res2</span><br><span class="line">        this.data.viewData2 = res2.map(item =&gt; &#123;</span><br><span class="line">          return &#123;</span><br><span class="line">            actId: this.data.couponItem,</span><br><span class="line">            ...item</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">        // 设置数据进行渲染</span><br><span class="line">        return this.data.viewData2</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;,</span><br><span class="line">  // 模拟用户点击操作, 用户点击，将这个viewData2.data1变成了3</span><br><span class="line">  // 比如更改优惠券的选择，或者支付方式</span><br><span class="line">  mockTap() &#123;</span><br><span class="line">    // 不使用优惠券，置为0000</span><br><span class="line">    this.data.couponItem = &apos;0000&apos;</span><br><span class="line">  &#125;,</span><br><span class="line">  postData() &#123;</span><br><span class="line">    // 提交数据需要</span><br><span class="line">    // 提交的数据需要viewData2的数据，因为用户不适用优惠券，导致要重新执行一下初始化viewData2的方法，因为所有的项目都不需要优惠券才对</span><br><span class="line">    this.data.viewData2 = this.res2.map(item =&gt; &#123;</span><br><span class="line">      return &#123;</span><br><span class="line">        actId: &apos;0000&apos;,</span><br><span class="line">        ...item</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    console.log(this.data.viewData2);</span><br><span class="line">    // do post</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">obj.onLoad().then(res =&gt; &#123;</span><br><span class="line">  console.log(&apos;res&apos;, res);</span><br><span class="line">  obj.mockTap()</span><br><span class="line">  obj.postData()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
-<p>上述代码是面向流程，主要是面向用户的使用角度。</p>
-<ol>
-<li>用户打开小程序，需要页面数据，则初始化数据，展示给用户。</li>
-<li>用户修改了优惠券信息。代码更改优惠券信息。</li>
-<li>用户下单，则获取数据，进行提交。</li>
-</ol>
-<p>这就产生了一个问题，之后的人要维护代码，有需求说增加支付方式，因此初始化的时候也要加一个支付方式，提交的时候也要加支付方式<br>这就要改两个地方。之后越改越多越改越难改。总结就是：代码过于耦合，维护起来困难。</p>
-<p>如果换成面向对象的方式。就变成了这样几个步骤。</p>
-<ol>
-<li>视图页面对象，也就是上面代码的obj。视图对象需要获取数据的功能，渲染数据的功能，处理数据的功能，提交数据功能。</li>
-<li>数据对象，也就是上方的viewData，在上面的业务逻辑中需要初始化功能，更换优惠券id功能，而viewData有个属性是一个Array<product></product></li>
-<li>Product对象，初始化功能<br>把代码处理下：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">class Product &#123;</span><br><span class="line">  constructor(product, couponItem) &#123;</span><br><span class="line">    this.id = product.id</span><br><span class="line">    this.value = product.value</span><br><span class="line">    this.couponItem = couponItem</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class ViewData &#123;</span><br><span class="line">  constructor(couponItem, products) &#123;</span><br><span class="line">    this.couponItem = couponItem</span><br><span class="line">    this._products = products</span><br><span class="line">    this._initProduct()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  changeCouponItem(couponItem) &#123;</span><br><span class="line">    this.couponItem = couponItem</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  _initProduct() &#123;</span><br><span class="line">    this.products = this._products.map(item =&gt; new Product(item, this.couponItem))</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  getPostData() &#123;</span><br><span class="line">    return this._products.map(item =&gt; new Product(item, this.couponItem))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let obj2 = &#123;</span><br><span class="line">  data: &#123;</span><br><span class="line">    viewData: &#123;&#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  onLoad() &#123;</span><br><span class="line">    return this._init();</span><br><span class="line">  &#125;,</span><br><span class="line">  async _init() &#123;</span><br><span class="line">    // 获取优惠券数据</span><br><span class="line">    // 这里用了一个方法将async await的内部错误作为err返回</span><br><span class="line">    const [err1, couponItem] = await to(getActivityId());</span><br><span class="line">    if (err1) &#123;</span><br><span class="line">      return &apos;没有数据&apos;</span><br><span class="line">    &#125;</span><br><span class="line">    const [err2, products] = await to(getProducts())</span><br><span class="line">    if (err2) &#123;</span><br><span class="line">      return &apos;没有产品数据&apos;</span><br><span class="line">    &#125;</span><br><span class="line">    this.data.viewData = new ViewData(couponItem.couponItem, products)</span><br><span class="line">    // 做渲染</span><br><span class="line">  &#125;,</span><br><span class="line">  // 模拟用户点击操作, 用户点击，将这个viewData2.data1变成了3</span><br><span class="line">  // 比如更改优惠券的选择，或者支付方式</span><br><span class="line">  mockTap() &#123;</span><br><span class="line">    // 不使用优惠券，置为0000</span><br><span class="line">    this.data.viewData.changeCouponItem(&apos;0000&apos;);</span><br><span class="line">  &#125;,</span><br><span class="line">  postData() &#123;</span><br><span class="line">    // 提交数据需要</span><br><span class="line">    // 提交的数据需要viewData2的数据，因为用户不适用优惠券，导致要重新执行一下初始化viewData2的方法，因为所有的项目都不需要优惠券才对</span><br><span class="line">    console.log(this.data.viewData.getPostData());</span><br><span class="line">    // do post</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">obj2.onLoad().then(_ =&gt; &#123;</span><br><span class="line">  console.log(obj2.data.viewData);</span><br><span class="line">  obj2.mockTap()</span><br><span class="line">  obj2.postData()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>代码就变的比较简洁，且维护的时候容易知道哪一块功能做啥的，也会告诉别人该怎么对代码进行拓展。这样的做法进行了解耦，也增加了可扩展性。<br>但坏处就是做之前要考虑好有哪些对象，需要进行声明。</p>
-<p>typescript就很好的支持了面向对象开发，有抽象，继承，多态，封装。就是为面向对象进行服务。如果类型声明的好，也可以直接靠ide进行相应对象内部的属性。</p>
-<p>总结：现在小程序中有太多面向过程开发，这有太多原因是小程序框架的问题，诱导了面向过程。面向过程关心的是先干什么，再干什么，一步一步往下走，而过程多了，代码就乱了。<br>而面向对象，就是先根据业务需求，有哪些模型类，这个类（业务）要干什么，有什么属性，以及进行的状态，外部使用通过实例化建立联系，当需要完成什么功能，则可以通过<br>执行对象的方法后返回结果，视图层再进行处理这个结果，这样也保护了数据的完整性，具体可以了解函数式编程。</p>
-
-        
-      
-    
-    </div>
-    
-  </article>
-  
-  
-    
-  
-
-  
-    
-  
-  <article class="
-  post
-  
+   is_post 
   ">
     <header class="post-header">
       <div class="post-time syuanpi fadeInUpShort back-1">
@@ -297,18 +235,19 @@
           <span>2020-01-07</span>
           
           
+            
+          
         </div>
       </div>
       <h1 class="post-title syuanpi fadeInUpShort back-2">
         
-          <a href="/2020/01/07/socket/"></a>
+          
         
       </h1>
     </header>
     <div class="post-content syuanpi fadeInUpShort back-3">
       
-        
-          <h2 id="何谓websocket"><a href="#何谓websocket" class="headerlink" title="何谓websocket"></a>何谓websocket</h2><p>简而言之就是实现了服务器和客户端全双工通信，服务器可以直接推送数据给客户端，而客户端也可以直接发送数据个服务器。<br>在http请求中，一个request 对应一个response，而且这个response是被动的，不能主动发起。而websocket则解决了这个问题。<br>具体其他的原理不赘述，可以查阅<br><a href="https://juejin.im/post/5b1a7189e51d45068b496cf0" target="_blank" rel="noopener">RFC6455 Websocket协议(翻译版)</a></p>
+        <h2 id="何谓websocket"><a href="#何谓websocket" class="headerlink" title="何谓websocket"></a>何谓websocket</h2><p>简而言之就是实现了服务器和客户端全双工通信，服务器可以直接推送数据给客户端，而客户端也可以直接发送数据个服务器。<br>在http请求中，一个request 对应一个response，而且这个response是被动的，不能主动发起。而websocket则解决了这个问题。<br>具体其他的原理不赘述，可以查阅<br><a href="https://juejin.im/post/5b1a7189e51d45068b496cf0" target="_blank" rel="noopener">RFC6455 Websocket协议(翻译版)</a></p>
 <p><a href="https://tools.ietf.org/html/rfc6455" target="_blank" rel="noopener">RFC6455 Websocket协议(原版)</a></p>
 <h2 id="从简单的tcp连接开始"><a href="#从简单的tcp连接开始" class="headerlink" title="从简单的tcp连接开始"></a>从简单的tcp连接开始</h2><p>先用node起一个简单的server端和client端，建立一个tcp连接</p>
 <p>server代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">const net = require(&apos;net&apos;)</span><br><span class="line"></span><br><span class="line">const server = net.createServer()</span><br><span class="line"></span><br><span class="line">server.on(&apos;connection&apos;, sock =&gt; &#123;</span><br><span class="line"></span><br><span class="line">  sock.setEncoding(&apos;utf8&apos;);</span><br><span class="line"></span><br><span class="line">  sock.on(&apos;error&apos;, function(err)&#123;</span><br><span class="line">    console.log(&apos;socket error - &apos;, err);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  sock.on(&apos;data&apos;, data =&gt; &#123;</span><br><span class="line">    console.log(&apos;data&apos;, data)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">server.listen(8080, () =&gt; &#123;</span><br><span class="line">  console.log(&apos;start on 8080&apos;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
@@ -327,266 +266,82 @@
 <figure class="highlight plain"><figcaption><span>81 81 95 78 24 f1 a4>```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">光拿出这个实在很难看懂，当然官方文档在后面的描述中也有详细介绍，看完后再回头来看图表才能看明白。这里就说我自己的理解。  </span><br><span class="line">现在再看左上角上面的图标，左上角的四个小列，也就是4位，第一位是FIN，后面三位是RSV1到3。官方文档上说RSV是预留的空间，正常为0，</span><br><span class="line">这就意味着，正常情况下他们可以当做0填充，那么前4位只有第一位的FIN需要设置，FIN表示帧结束，由于这篇中它不重要就不特别介绍了。</span><br><span class="line">接着后面的四位是储存opcode的值，这个opcode是标识数据类型的。这样数据的第一个字节我们就能理解它的含义了，看上面16进制的数据的第一个字节81换成二进制是1000001，</span><br><span class="line">第一个1是FIN的值，最后一个1是opcode的值, 表示一个文本帧（具体帧类型可以看文档）。  </span><br><span class="line">接着是第二个字节的数据，它由1位的MASK和7位的PayloadLen组成，MASK标识这个数据帧的数据是否使用掩码，PayloadLen表示数据部分的长度。但是PayloadLen只有7位，</span><br><span class="line">换成无符号整型的话只有0到127的取值，这么小的数值当然无法描述较大的数据，因此规定当数据长度小于或等于125时候它才作为数据长度的描述，如果这个值为126，</span><br><span class="line">则时候后面的两个字节来储存储存数据长度，如果为127则用后面四个字节来储存数据长度。所以上面的图片第一行的最右侧那块和第二行看起来有些颓然。从我们的示例数据来看，</span><br><span class="line">第二个字节中81(十六进制)变为二进制`10000001`, 最前面的是1，这意味着MASK为1，后面的1表示这个数据部分有1个字节</span><br><span class="line">再接着是上面图表中的MaskingKey，它占四个字节，储存掩码的实体部分。但是只有在前面的MASK被设置为1时候才存在这个数据，否则不使用掩码也就没有这个数据了。</span><br><span class="line">看我们的示例数据，由于前面的MASK为1，所以3到6字节的“95 78 24 f1”是数据的掩码实体。  </span><br><span class="line">最后是数据部分，如果掩码存在，那么所有数据都需要与掩码做一次异或运算，四个字节的掩码与所有数据字节轮流进行位运算或者逻辑运算。如果不存在掩码，那么后面的数据就可以直接使用。</span><br><span class="line"></span><br><span class="line">一个简易的解密方法</span><br><span class="line">```vue</span><br><span class="line">function decodeDataFrame2(buffer) &#123;</span><br><span class="line">  const frame = &#123;&#125;;</span><br><span class="line">  let start = 0;</span><br><span class="line">  frame.FIN = buffer[ start ] &gt;&gt; 7;</span><br><span class="line">  frame.Qpcode = buffer[ start++ ] &amp; 0b1111; // qrcode占四个二进制，进行与运算来获取qrcode的值</span><br><span class="line">  frame.Mask = buffer[ start ] &gt;&gt; 7;</span><br><span class="line">  frame.PayloadLength = buffer[ start++ ] &amp; 0b1111111; // 获取payload len，由于payload len的存储占7个二进制</span><br><span class="line"></span><br><span class="line">  if (!frame.FIN) &#123;</span><br><span class="line">    // 表示为终结</span><br><span class="line">    return false</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  let s = undefined;</span><br><span class="line"></span><br><span class="line">  if (frame.PayloadLength == 126) &#123;</span><br><span class="line">    // 表示后面的两个字节来储存储存数据长度</span><br><span class="line">    // frame.PayloadLength = buffer.readUInt16BE(2);</span><br><span class="line">    frame.PayloadLength = (buffer[ start++ ] &lt;&lt; 8) + buffer[ start++ ];</span><br><span class="line">  &#125; else if (frame.PayloadLength == 127) &#123;</span><br><span class="line">    // 则用后面四个字节来储存数据长度</span><br><span class="line">    // frame.PayloadLength = buffer.readUInt16BE(4);</span><br><span class="line">    frame.PayloadLength = (buffer[ start++ ] &lt;&lt; (8 * 3)) + (buffer[ start++ ] &lt;&lt; (8 * 2)) + (buffer[ start++ ] &lt;&lt; 8) + buffer[ start++ ]</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  if (frame.Mask) &#123;</span><br><span class="line">    frame.MaskingKey = [buffer[ start++ ], buffer[ start++ ], buffer[ start++ ], buffer[ start++ ]];</span><br><span class="line">    s = []</span><br><span class="line">    for (let i = 0; i &lt; frame.PayloadLength; i++) &#123;</span><br><span class="line">      s.push( buffer[start + i] ^= frame.MaskingKey[i % 4]);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    s = buffer.slice(start, frame.PayloadLength)</span><br><span class="line">  &#125;</span><br><span class="line">  s = Buffer.from(s)</span><br><span class="line">  frame.PayloadData = s</span><br><span class="line">  return frame</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="报文发送的加密方法（使用的nodejs-websocket）"><a href="#报文发送的加密方法（使用的nodejs-websocket）" class="headerlink" title="报文发送的加密方法（使用的nodejs-websocket）"></a>报文发送的加密方法（使用的nodejs-websocket）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">function createTextFrame (data, masked) &#123;</span><br><span class="line">	var payload, meta</span><br><span class="line"></span><br><span class="line">	payload = Buffer.from(data)</span><br><span class="line">	meta = generateMetaData(true, 1, masked === undefined ? false : masked, payload)</span><br><span class="line"></span><br><span class="line">	return Buffer.concat([meta, payload], meta.length + payload.length)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function generateMetaData(fin, opcode, masked, payload) &#123;</span><br><span class="line">	var len, meta, start, mask, i</span><br><span class="line"></span><br><span class="line">	len = payload.length</span><br><span class="line"></span><br><span class="line">	// Creates the buffer for meta-data</span><br><span class="line">	meta = Buffer.alloc(2 + (len &lt; 126 ? 0 : (len &lt; 65536 ? 2 : 8)) + (masked ? 4 : 0))</span><br><span class="line"></span><br><span class="line">	// Sets fin and opcode</span><br><span class="line">	meta[0] = (fin ? 128 : 0) + opcode</span><br><span class="line"></span><br><span class="line">	// Sets the mask and length</span><br><span class="line">	meta[1] = masked ? 128 : 0</span><br><span class="line">	start = 2</span><br><span class="line">	if (len &lt; 126) &#123;</span><br><span class="line">		meta[1] += len</span><br><span class="line">	&#125; else if (len &lt; 65536) &#123;</span><br><span class="line">		meta[1] += 126</span><br><span class="line">		meta.writeUInt16BE(len, 2)</span><br><span class="line">		start += 2</span><br><span class="line">	&#125; else &#123;</span><br><span class="line">		// Warning: JS doesn&apos;t support integers greater than 2^53</span><br><span class="line">		meta[1] += 127</span><br><span class="line">		meta.writeUInt32BE(Math.floor(len / Math.pow(2, 32)), 2)</span><br><span class="line">		meta.writeUInt32BE(len % Math.pow(2, 32), 6)</span><br><span class="line">		start += 8</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	// Set the mask-key</span><br><span class="line">	if (masked) &#123;</span><br><span class="line">		mask = Buffer.alloc(4)</span><br><span class="line">		for (i = 0; i &lt; 4; i++) &#123;</span><br><span class="line">			meta[start + i] = mask[i] = Math.floor(Math.random() * 256)</span><br><span class="line">		&#125;</span><br><span class="line">		for (i = 0; i &lt; payload.length; i++) &#123;</span><br><span class="line">			payload[i] ^= mask[i % 4]</span><br><span class="line">		&#125;</span><br><span class="line">		start += 4</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return meta</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-        
       
     
     </div>
     
-  </article>
-  
-  
-    
-  
+      
 
-  
-    
-  
-  <article class="
-  post
-  
-  ">
-    <header class="post-header">
-      <div class="post-time syuanpi fadeInUpShort back-1">
-        <div class="post-time-wrapper">
-          <span>2019-06-03</span>
-          
-          
-        </div>
-      </div>
-      <h1 class="post-title syuanpi fadeInUpShort back-2">
-        
-          <a href="/2019/06/03/nginx/">使用nginx做反代理以及添加SSL。</a>
-        
-      </h1>
-    </header>
-    <div class="post-content syuanpi fadeInUpShort back-3">
       
-        
-          <p><br></p>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本篇适合入门nginx或需要对自己的网站做ssl的情况。<br>自己为了要做小程序需要ssl，就整理了一些流程，自己之后也可以回顾。</p>
-        
-      
-    
-      <p class="content-link">
-        <a href="/2019/06/03/nginx/#more">
-          <span>继续阅读</span>
-        </a>
-      </p>
-    
+  <hr class="copy-line">
+  <div class="post-copyright">
+    <div class="copy-author">
+      <span>作者 :</span>
+      <span>Salter Yu</span>
     </div>
-    
-  </article>
-  
-  
-    
-  
-
-  
-    
-  
-  <article class="
-  post
-  
-  ">
-    <header class="post-header">
-      <div class="post-time syuanpi fadeInUpShort back-1">
-        <div class="post-time-wrapper">
-          <span>2019-06-03</span>
-          
-          
-        </div>
-      </div>
-      <h1 class="post-title syuanpi fadeInUpShort back-2">
-        
-          <a href="/2019/06/03/simple-compiler/">AST入门</a>
-        
-      </h1>
-    </header>
-    <div class="post-content syuanpi fadeInUpShort back-3">
-      
-        
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><a href="https://astexplorer.net/" target="_blank" rel="noopener">AST Explore，可视化工具</a></p>
-<p>现如今，许多各式各样的框架诞生，特别是多端生成的解决方案，例如：taro，Chameleon（卡梅隆），小程序框架: mpvue，wepy。<br>又或者在其他场景，如：</p>
-<ol>
-<li>eslint对代码错误或风格的检查，发现一些潜在的错误</li>
-<li>IDE的错误提示、格式化、高亮、自动补全等.</li>
-<li>UglifyJS压缩代码.</li>
-<li>代码打包工具webpack。</li>
-</ol>
-<p>万变不离其宗，都是站在AST这个巨人的肩膀上。<br>且对于体力型的，或者重复性的工作，能用工具化，流程化解决就用他们解决。</p>
-<p>在了解编译器之前，了解一下babel的编译过程。<a href="https://yq.aliyun.com/articles/62671" target="_blank" rel="noopener">(来源)</a></p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/12/24/167dfa8949b0401a?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="来源"><br>
-        
-      
-    
-      </p><p class="content-link">
-        <a href="/2019/06/03/simple-compiler/#more">
-          <span>继续阅读</span>
-        </a>
-      </p>
-    
+    <div class="copy-url">
+      <span>地址 :</span>
+      <a href="https://salteryu.github.io/2020/01/07/socket/">https://salteryu.github.io/2020/01/07/socket/</a>
     </div>
-    
-  </article>
-  
-  
-    
-  
-
-  
-    
-  
-  <article class="
-  post
-  
-  ">
-    <header class="post-header">
-      <div class="post-time syuanpi fadeInUpShort back-1">
-        <div class="post-time-wrapper">
-          <span>2019-05-14</span>
-          
-          
-        </div>
-      </div>
-      <h1 class="post-title syuanpi fadeInUpShort back-2">
-        
-          <a href="/2019/05/14/docker-react-app/">用docker来构建一个react项目镜像（一）</a>
-        
-      </h1>
-    </header>
-    <div class="post-content syuanpi fadeInUpShort back-3">
-      
-        
-          <p><br></p>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近在捣鼓自己的一个小站点，但是每次更新项目都要发布后总是ssh，然后重启nginx，属实麻烦，就尝试使用Jenkins来部署自动化，但在这之前要了解一下docker。<br>就尝试用docker来构建一个react项目。</p>
-        
-      
-    
-      <p class="content-link">
-        <a href="/2019/05/14/docker-react-app/#more">
-          <span>继续阅读</span>
-        </a>
-      </p>
-    
+    <div class="copy-origin">
+      <span>来源 :</span>
+      <a href="https://salteryu.github.io">https://salteryu.github.io</a>
     </div>
-    
-  </article>
-  
-  
-    
-  
-
-  
-    
-  
-  <article class="
-  post
-  
-  ">
-    <header class="post-header">
-      <div class="post-time syuanpi fadeInUpShort back-1">
-        <div class="post-time-wrapper">
-          <span>2019-03-18</span>
-          
-          
-        </div>
-      </div>
-      <h1 class="post-title syuanpi fadeInUpShort back-2">
-        
-          <a href="/2019/03/18/publish-subscribe/">Vue原理(一)</a>
-        
-      </h1>
-    </header>
-    <div class="post-content syuanpi fadeInUpShort back-3">
+    <div class="copy-license">
       
-        
-          <p><br></p>
-<h1 id="观察者模式设计"><a href="#观察者模式设计" class="headerlink" title="观察者模式设计"></a>观察者模式设计</h1><p>在软件设计中是一个对象，维护一个依赖列表，当任何状态发生改变自动通知它们。(来自wiki百科)</p>
-<p>例：小明去买房（观察者Observer），去找房产中心（目标主体Subject），发布者说等有合适的就通知小明。这样就形成了一个环</p>
-<h1 id="发布订阅模式设计"><a href="#发布订阅模式设计" class="headerlink" title="发布订阅模式设计"></a>发布订阅模式设计</h1><p>在软件架构中，发布-订阅是一种消息范式，消息的发送者（称为发布者）不会将消息直接发送给特定的接收者（称为订阅者）。而是将发布的消息分为不同的类别，无需了解哪些订阅者（如果有的话）可能存在。同样的，订阅者可以表达对一个或多个类别的兴趣，只接收感兴趣的消息，无需了解哪些发布者（如果有的话）存在。(来自wiki百科)</p>
-<p>例：小明去买房（订阅者Subscriber），委托第三方中介去买房（调度中心Event Channel），等待第三方中介回馈消息，过了一会房产中心（发布者Publisher）发布消息给第三方中介，第三方中介发现正好符合小明的要求（key）就去通知小明。</p>
-<h1 id="两者区别"><a href="#两者区别" class="headerlink" title="两者区别"></a>两者区别</h1><p><img src="https://user-gold-cdn.xitu.io/2017/11/22/15fe1b1f174cd376?imageslim"></p>
-<p>图片来源: <a href="http://developers-club.com/posts/270339/" target="_blank" rel="noopener">developers-club</a></p>
-<blockquote>
-<ol>
-<li>在观察者模式中，观察者是知道主体Subject的，而Subject一直保持对观察者的记录。相反在发布订阅中，两者并不互相了解，只能通过代理进行沟通。</li>
-<li>观察者模式大多数是同步，如：事件触发，而发布订阅模式大多数是异步，如：消息队列。</li>
-<li>观察者模式是一种紧耦合状态，而发布订阅模式是一种松耦合的状态。</li>
-<li>观察者模式是通过主体本身去遍历观察者（维护的是观察者），然后调用订阅者的通知方法去实现。而发布订阅则是通过事件管道去通知（维护的是事件）。</li>
-</ol>
-</blockquote>
-<h1 id="MVVM和MVC的区别"><a href="#MVVM和MVC的区别" class="headerlink" title="MVVM和MVC的区别"></a>MVVM和MVC的区别</h1><p>MVVM 是 Model-View-ViewModel 的缩写。mvvm 是一种设计思想。Model 层代表数据模型，也可以在 Model 中定义数据修改和操作的业务逻辑；View 代表 UI 组件，它负责将数据模型转化成 UI 展现出来，ViewModel 是一个同步 View 和 Model 的对象。</p>
-<p>在 MVVM 架构下，View 和 Model 之间并没有直接的联系，而是通过 ViewModel 进行交互，Model 和 ViewModel 之间的交互是双向的， 因此 View 数据的变化会同步到 Model 中，而 Model 数据的变化也会立即反应到 View 上。</p>
-<p>ViewModel 通过双向数据绑定把 View 层和 Model 层连接了起来，而 View 和 Model 之间的同步工作完全是自动的，无需人为干涉，因此开发者只需关注业务逻辑，不需要手动操作 DOM, 不需要关注数据状态的同步问题，复杂的数据状态维护完全由 MVVM 来统一管理。</p>
-<p>Vue.js 是一个提供了 MVVM 风格的双向数据绑定的 Javascript 库，专注于View 层。它的核心是 MVVM 中的 VM，也就是 ViewModel。 ViewModel负责连接 View 和 Model，保证视图和数据的一致性，这种轻量级的架构让前端开发更加高效、便捷。 </p>
-        
-      
-    
-      <p class="content-link">
-        <a href="/2019/03/18/publish-subscribe/#more">
-          <span>继续阅读</span>
-        </a>
-      </p>
-    
+      著作权归作者所有，转载请联系作者获得授权。
     </div>
+  </div>
+
     
   </article>
   
-  
     
-  
-
-  
+  <nav class="article-page">
     
-  
-  <article class="
-  post
-  
-  ">
-    <header class="post-header">
-      <div class="post-time syuanpi fadeInUpShort back-1">
-        <div class="post-time-wrapper">
-          <span>2018-11-26</span>
-          
-          
-        </div>
-      </div>
-      <h1 class="post-title syuanpi fadeInUpShort back-2">
-        
-          <a href="/2018/11/26/simpe-webpack-project/">Webpack详解</a>
-        
-      </h1>
-    </header>
-    <div class="post-content syuanpi fadeInUpShort back-3">
-      
-        
-          <p><br></p>
-<h1 id="Webpack"><a href="#Webpack" class="headerlink" title="Webpack"></a>Webpack</h1><h2 id="为什么要使用WebPack"><a href="#为什么要使用WebPack" class="headerlink" title="为什么要使用WebPack"></a>为什么要使用WebPack</h2><p>现今的很多网页其实可以看做是功能丰富的应用，它们拥有着复杂的JavaScript代码和一大堆依赖包。为了简化开发的复杂度，前端社区涌现出了很多好的实践方法</p>
-<p>模块化，让我们可以把复杂的程序细化为小的文件;<br>类似于TypeScript这种在JavaScript基础上拓展的开发语言：使我们能够实现目前版本的JavaScript不能直接使用的特性，并且之后还能转换为JavaScript文件使浏览器可以识别；<br>Scss，less等CSS预处理器<br>…<br>这些改进确实大大的提高了我们的开发效率，但是利用它们开发的文件往往需要进行额外的处理才能让浏览器识别,而手动处理又是非常繁琐的，这就为WebPack类的工具的出现提供了需求。</p>
-<p>什么是Webpack</p>
-        
-      
+      <a href="/2020/03/25/object-oriented-for-miniapp/" id="art-left" class="art-left">
+        <span class="next-title">
+          <i class="iconfont icon-left"></i>
+        </span>
+      </a>
     
-      <p class="content-link">
-        <a href="/2018/11/26/simpe-webpack-project/#more">
-          <span>继续阅读</span>
-        </a>
-      </p>
     
-    </div>
+      <a href="/2019/06/03/nginx/" id="art-right" class="art-right">
+        <span class="prev-title"> 
+          使用nginx做反代理以及添加SSL。<i class="iconfont icon-right"></i>  
+        </span>
+      </a>
     
-  </article>
-  
-  
-    
-  
-
-  
-</section>
-  
-  <nav class="pagination">
-      <span class="page-number current">1</span>
   </nav>
+
+    
+  <i id="com-switch" class="iconfont icon-more jumping-in long infinite" style="font-size:24px;display:block;text-align:center;transform:rotate(180deg);"></i>
+  <div class="post-comments" id="post-comments" style="display: block;margin: auto 16px;">
+    
+    
+    
+
+    
+
+  </div>
+
+
+
+  
+  
+    
+  
+  <aside class="post-toc">
+    <span class="title" id="toc-switch"><span>文章导航</span></span>
+    <div class="toc-inner syuanpi back-1" style="display:none;">
+      <li class="title-link"><a href="javascript:;" class="toTop"></a></li>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#何谓websocket"><span class="toc-text">何谓websocket</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从简单的tcp连接开始"><span class="toc-text">从简单的tcp连接开始</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#升级为websocket"><span class="toc-text">升级为websocket</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#模拟握手功能。"><span class="toc-text">模拟握手功能。</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#数据的解密："><span class="toc-text">数据的解密：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#报文发送的加密方法（使用的nodejs-websocket）"><span class="toc-text">报文发送的加密方法（使用的nodejs-websocket）</span></a></li></ol></li></ol>
+    </div>
+  </aside>
+
+
+
+  
 
 
         </div>
